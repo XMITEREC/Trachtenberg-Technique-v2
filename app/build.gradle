@@ -1,0 +1,46 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace "com.Trachtenberg.jacob.v2"              // <-- namespace
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.Trachtenberg.jacob.v2"      // <-- pkg id
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("$rootDir/../keystore/trachtenberg_release.jks")
+            storePassword "changeit"
+            keyAlias "ttv2"
+            keyPassword "changeit"
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                          'proguard-rules.pro'
+        }
+        debug { applicationIdSuffix ".debug" }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.core:core-splashscreen:1.0.1'   // for fade-in
+    implementation 'androidx.viewpager2:viewpager2:1.1.0-beta02'
+    implementation 'com.google.android.material:material:1.11.0'  // progress bar tint
+}

@@ -1,0 +1,7 @@
+image:
+  file: Dockerfile
+
+tasks:
+  - name: Build signed APK
+    init: ./gradlew clean assembleRelease
+    command: echo "APK built → app/build/outputs/apk/release/app-release.apk"

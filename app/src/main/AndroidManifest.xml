@@ -1,0 +1,22 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.Trachtenberg.jacob.v2">
+
+    <application
+        android:allowBackup="true"
+        android:label="Trachtenberg Technique"
+        android:theme="@style/Theme.TTV2">
+
+        <activity android:name=".MainActivity"/>
+
+        <!-- Splash is the LAUNCHER just like Kodular Screen1 -->
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TTV2.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
