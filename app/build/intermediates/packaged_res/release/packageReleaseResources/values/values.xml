@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ttv2_red">#F34336</color>
+    <color name="white">#FFFFFF</color>
+    <string name="app_name">Trachtenberg Technique</string>
+    <style name="Theme.TTV2" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowSplashScreenBackground">@color/white</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+    <style name="Theme.TTV2.Launcher" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="android:windowSplashScreenBackground">@color/white</item>
+        <item name="postSplashScreenTheme">@style/Theme.TTV2</item>
+    </style>
+    <style name="Theme.TTV2.NoActionBar" parent="Theme.TTV2">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+</resources>

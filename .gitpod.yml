@@ -1,15 +1,15 @@
+image:
+  file: Dockerfile           # ← uses the image above
+
 tasks:
   - name: Build signed APK
-    init: ./gradlew clean assembleRelease
-    command: echo "APK built → app/build/outputs/apk/release/app-release.apk"
-
-# New: persist ~/.android & SDK between pre-builds
-vscode:
-  extensions:
-    - phatblat.vscode-adb-interface     # handy, optional
+    init: |
+      # Tell Gradle where the SDK is for THIS workspace
+      echo "sdk.dir=$ANDROID_HOME" > local.properties
+      ./gradlew clean assembleRelease
+    command: echo "✅ Signed APK → app/build/outputs/apk/release/app-release.apk"
 
 github:
   prebuilds:
-    enabled: true
-    imageCache: true                    # ← keep layers with the SDK
-
+    enabled: true            # build once per branch/PR
+    imageCache: true         # reuse Docker layers

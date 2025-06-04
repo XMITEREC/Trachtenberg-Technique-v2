@@ -1,0 +1,38 @@
+[
+    {
+        "merged": "com.Trachtenberg.jacob.v2.app-release-33:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "com.Trachtenberg.jacob.v2.app-main-34:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.Trachtenberg.jacob.v2.app-release-33:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "com.Trachtenberg.jacob.v2.app-main-34:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.Trachtenberg.jacob.v2.app-release-33:/layout_activity_main.xml.flat",
+        "source": "com.Trachtenberg.jacob.v2.app-main-34:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.Trachtenberg.jacob.v2.app-release-33:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.Trachtenberg.jacob.v2.app-main-34:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.Trachtenberg.jacob.v2.app-release-33:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.Trachtenberg.jacob.v2.app-main-34:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.Trachtenberg.jacob.v2.app-release-33:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "com.Trachtenberg.jacob.v2.app-main-34:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.Trachtenberg.jacob.v2.app-release-33:/layout_activity_splash.xml.flat",
+        "source": "com.Trachtenberg.jacob.v2.app-main-34:/layout/activity_splash.xml"
+    },
+    {
+        "merged": "com.Trachtenberg.jacob.v2.app-release-33:/drawable_unnamed.png.flat",
+        "source": "com.Trachtenberg.jacob.v2.app-main-34:/drawable/unnamed.png"
+    },
+    {
+        "merged": "com.Trachtenberg.jacob.v2.app-release-33:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.Trachtenberg.jacob.v2.app-main-34:/mipmap-anydpi-v26/ic_launcher.xml"
+    }
+]

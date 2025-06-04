@@ -1,0 +1,16 @@
+R_DEF: Internal format may change without notice
+local
+color ttv2_red
+color white
+drawable unnamed
+id pageIndicator
+id pageSlider
+id pdfPager
+id seal
+layout activity_main
+layout activity_splash
+mipmap ic_launcher
+string app_name
+style Theme.TTV2
+style Theme.TTV2.Launcher
+style Theme.TTV2.NoActionBar

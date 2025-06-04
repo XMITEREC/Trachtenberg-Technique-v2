@@ -1,11 +1,11 @@
 plugins { id 'com.android.application' }
 
 android {
-    namespace "com.Trachtenberg.jacob.v2"              // <-- namespace
+    namespace  "com.Trachtenberg.jacob.v2"
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.Trachtenberg.jacob.v2"      // <-- pkg id
+        applicationId "com.Trachtenberg.jacob.v2"
         minSdk 24
         targetSdk 34
         versionCode 1
@@ -15,10 +15,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("$rootDir/../keystore/trachtenberg_release.jks")
+            storeFile     file("${rootProject.projectDir}/keystore/trachtenberg_release.jks")
             storePassword "changeit"
-            keyAlias "ttv2"
-            keyPassword "changeit"
+            keyAlias      "ttv2"
+            keyPassword   "changeit"
         }
     }
 
@@ -40,7 +40,7 @@ android {
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'androidx.core:core-splashscreen:1.0.1'   // for fade-in
+    implementation 'androidx.core:core-splashscreen:1.0.1'
     implementation 'androidx.viewpager2:viewpager2:1.1.0-beta02'
-    implementation 'com.google.android.material:material:1.11.0'  // progress bar tint
+    implementation 'com.google.android.material:material:1.11.0'
 }

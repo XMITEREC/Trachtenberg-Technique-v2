@@ -1,7 +1,7 @@
 package com.Trachtenberg.jacob.v2;
 
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.graphics.*;
 import android.graphics.pdf.PdfRenderer;
 import android.os.ParcelFileDescriptor;
 import android.util.SparseArray;
@@ -17,41 +17,38 @@ public class PdfPageAdapter extends RecyclerView.Adapter<PdfPageAdapter.PageVH> 
     private final SparseArray<Bitmap> cache = new SparseArray<>();
 
     public PdfPageAdapter(Context ctx) throws IOException {
-        // copy assets/Trac.pdf to a tmp file (PdfRenderer needs FD)
-        File tmp = File.createTempFile("trac", ".pdf", ctx.getCacheDir());
-        try (InputStream in = ctx.getAssets().open("Trac.pdf");
+        File tmp = File.createTempFile("trac",".pdf",ctx.getCacheDir());
+        try (InputStream in = ctx.getAssets().openFd("Trac.pdf").createInputStream();
              OutputStream out = new FileOutputStream(tmp)) {
-            byte[] buf = new byte[8192];
-            int n;
-            while ((n = in.read(buf)) != -1) out.write(buf, 0, n);
+            byte[] buf = new byte[8192]; int n;
+            while ((n = in.read(buf))!=-1) out.write(buf,0,n);
         }
         renderer = new PdfRenderer(
                 ParcelFileDescriptor.open(tmp, ParcelFileDescriptor.MODE_READ_ONLY));
     }
 
     @NonNull
-    @Override public PageVH onCreateViewHolder(@NonNull ViewGroup parent, int vt) {
-        ImageView iv = new ImageView(parent.getContext());
-        iv.setAdjustViewBounds(true);
-        iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
+    @Override public PageVH onCreateViewHolder(@NonNull ViewGroup p,int v){
+        ImageView iv=new ImageView(p.getContext());
+        iv.setAdjustViewBounds(true); iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
         return new PageVH(iv);
     }
 
-    @Override public void onBindViewHolder(@NonNull PageVH h, int pos) {
-        Bitmap bmp = cache.get(pos);
-        if (bmp == null) {
-            PdfRenderer.Page p = renderer.openPage(pos);
-            bmp = Bitmap.createBitmap(p.getWidth(), p.getHeight(), Bitmap.Config.ARGB_8888);
-            p.render(bmp, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
-            p.close();
-            cache.put(pos, bmp);
+    @Override public void onBindViewHolder(@NonNull PageVH h,int pos){
+        Bitmap bmp=cache.get(pos);
+        if(bmp==null){
+            PdfRenderer.Page page=renderer.openPage(pos);
+            bmp=Bitmap.createBitmap(page.getWidth(),page.getHeight(),Bitmap.Config.ARGB_8888);
+            page.render(bmp,null,null,PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+            page.close();
+            cache.put(pos,bmp);
         }
         h.iv.setImageBitmap(bmp);
     }
 
-    @Override public int getItemCount() { return renderer.getPageCount(); }
+    @Override public int getItemCount(){ return renderer.getPageCount(); }
 
-    static class PageVH extends RecyclerView.ViewHolder {
-        ImageView iv; PageVH(ImageView v) { super(v); iv = v; }
+    static class PageVH extends RecyclerView.ViewHolder{
+        ImageView iv; PageVH(ImageView v){ super(v); iv=v; }
     }
 }

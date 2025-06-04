@@ -1,12 +1,15 @@
 # ─────────────────────────────────────────────────────────────
-# Android build image for Gitpod
+# Android build image • JDK 17 • SDK 34 • Gradle-ready
 # ─────────────────────────────────────────────────────────────
-FROM eclipse-temurin:17-jdk                # JDK 17 is the sweet spot
+FROM eclipse-temurin:17-jdk
 
-ENV ANDROID_SDK_ROOT=/opt/android-sdk
-ENV PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+# ---------- versions you may bump in ONE place ----------
+ARG   CLT_VER=11076708        # command-line tools build (see studio downloads)
+ENV   ANDROID_SDK_ROOT=/opt/android-sdk
+ENV   ANDROID_HOME=/opt/android-sdk
+ENV   PATH=$PATH:$ANDROID_HOME/platform-tools
 
-# 1) packages we really need
+# ---------- system packages ----------
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive \
     apt-get install -y --no-install-recommends \
@@ -14,15 +17,24 @@ RUN apt-get update && \
         libc6-i386 lib32stdc++6 lib32z1 && \
     rm -rf /var/lib/apt/lists/*
 
-# 2) download **command-line tools latest**
-RUN mkdir -p $ANDROID_SDK_ROOT/cmdline-tools && \
-    wget -q https://dl.google.com/android/repository/commandlinetools-linux-112.0.0.zip -O /tmp/clt.zip && \
-    unzip -q /tmp/clt.zip -d $ANDROID_SDK_ROOT/cmdline-tools && \
-    rm /tmp/clt.zip && \
-    # the SDK expects a versioned or `latest/` directory → move it there
-    mv $ANDROID_SDK_ROOT/cmdline-tools/cmdline-tools $ANDROID_SDK_ROOT/cmdline-tools/latest
+# ---------- install Google command-line tools ----------
+RUN mkdir -p $ANDROID_HOME/cmdline-tools && \
+    wget -q https://dl.google.com/android/repository/commandlinetools-linux-${CLT_VER}_latest.zip -O /tmp/clt.zip && \
+    unzip -q /tmp/clt.zip -d $ANDROID_HOME/cmdline-tools && \
+    mv $ANDROID_HOME/cmdline-tools/cmdline-tools $ANDROID_HOME/cmdline-tools/latest && \
+    rm /tmp/clt.zip
 
-# 3) install SDK components & accept licences
-RUN yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses && \
-    $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --install \
-        "platform-tools" "platforms;android-34" "build-tools;34.0.0"
+# ---------- install SDK packages & accept licences ----------
+RUN yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses && \
+    $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install \
+        "platform-tools" \
+        "platforms;android-34" \
+        "build-tools;34.0.0"
+
+# ---------- lock JAVA_HOME for every shell (Gitpod ignores container env) ----------
+RUN JDK_PATH="$(dirname $(dirname $(readlink -f $(which javac))))" && \
+    echo "export JAVA_HOME=$JDK_PATH"           >> /etc/profile.d/99jdk.sh && \
+    echo 'export PATH=$JAVA_HOME/bin:$PATH'     >> /etc/profile.d/99jdk.sh
+
+# ---------- default working directory will be repo root ----------
+WORKDIR /workspace
